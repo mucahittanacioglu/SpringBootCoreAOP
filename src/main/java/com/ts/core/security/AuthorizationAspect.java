@@ -29,6 +29,7 @@ public class AuthorizationAspect {
 
     @Before("@annotation(requiredRoles)")
     public void authorize(JoinPoint joinPoint, RequiredRoles requiredRoles) throws Throwable{
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null) {

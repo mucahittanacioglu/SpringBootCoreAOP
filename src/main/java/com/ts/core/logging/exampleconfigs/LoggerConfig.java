@@ -10,7 +10,6 @@ import org.springframework.core.annotation.Order;
 @ConditionalOnProperty(name = "logging.enabled", havingValue = "true")
 public class LoggerConfig {
 
-
     @Bean
     @ConditionalOnProperty(name = "logger.profile", havingValue = "log4j")
     public ILoggerConfiguration log4j() {

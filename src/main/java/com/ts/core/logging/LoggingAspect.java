@@ -20,6 +20,7 @@ import java.util.Arrays;
 @ConditionalOnProperty(name = "logging.enabled", havingValue = "true")
 public class LoggingAspect {
 
+    //TODO Loglama ile alakalı bbir interface oluştur kullananlar isteiğini yazdırsın
     @Autowired
     private ILoggerConfiguration logger;
 

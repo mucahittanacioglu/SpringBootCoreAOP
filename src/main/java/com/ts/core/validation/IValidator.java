@@ -5,5 +5,4 @@ import com.ts.core.exceptions.ValidationException;
 
 public interface IValidator<T extends IEntity> {
     void validate(T entity) throws ValidationException;
-
 }

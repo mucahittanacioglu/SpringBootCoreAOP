@@ -12,7 +12,6 @@ import java.util.Set;
 @MappedSuperclass
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public abstract class IUser extends IEntity {
-
     @Column(name = "email")
     private String email;
 

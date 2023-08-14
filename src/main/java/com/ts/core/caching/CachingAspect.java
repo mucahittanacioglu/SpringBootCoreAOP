@@ -53,7 +53,6 @@ public class CachingAspect {
                 if (cachedValue != null) {
                     return cachedValue;
                 }
-
                 // Otherwise, proceed with the method execution
                 Object result = joinPoint.proceed();
                 ICacheConfiguration.addToCache(cacheName, key, result);

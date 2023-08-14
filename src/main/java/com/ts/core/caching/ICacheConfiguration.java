@@ -14,5 +14,4 @@ public interface ICacheConfiguration {
     void updateCache(String cacheName, Object key, Object value);
 
     <T> T getFromCache(String cacheName, Object key, Class<T> type);
-
 }

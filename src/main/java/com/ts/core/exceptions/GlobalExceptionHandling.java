@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandling {
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> handleAuthenticationException(IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Wrong info");
-    }
+
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<?> handleAuthenticationException(UnauthorizedException e) {
+    public ResponseEntity<?> handleAuthorizationException(UnauthorizedException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not allowed for this resource.");
+    }
+    @ExceptionHandler(UnauthenticatedException.class)
+    public ResponseEntity<?> handleAuthenticationException(UnauthenticatedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authenticated for this resource.");
     }
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<?> handleAuthenticationException(ValidationException e) {

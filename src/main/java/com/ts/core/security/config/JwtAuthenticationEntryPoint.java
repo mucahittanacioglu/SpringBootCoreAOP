@@ -1,5 +1,6 @@
 package com.ts.core.security.config;
 
+import com.ts.core.exceptions.UnauthenticatedException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +18,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException, ServletException {
         // This is invoked when user tries to access a secured REST resource without supplying any credentials
         // We should just send a 401 Unauthorized response because there is no 'login page' to redirect to
-        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Unauthenticated");
+//        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Unauthenticated");
+        throw new UnauthenticatedException("unauthenticated");
     }
 
 

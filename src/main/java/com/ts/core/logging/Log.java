@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Log {
     LogAction[] action() default LogAction.INFO;
+    Class<? extends ILogging> log();
 }

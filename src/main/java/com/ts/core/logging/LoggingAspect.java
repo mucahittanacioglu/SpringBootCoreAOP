@@ -8,11 +8,13 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 @Component
 @Aspect
@@ -23,6 +25,9 @@ public class LoggingAspect {
     //TODO Loglama ile alakalı bbir interface oluştur kullananlar isteiğini yazdırsın
     @Autowired
     private ILoggerConfiguration logger;
+    @Autowired
+    ApplicationContext applicationContext;
+    private ILogging log;
 
     @Pointcut("@annotation(com.ts.core.logging.Log)")
     public void logAnnotatedMethods() {
@@ -33,60 +38,64 @@ public class LoggingAspect {
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
+        var args = joinPoint.getArgs();
 
         Log logAnnotation = method.getAnnotation(Log.class);
 
+        Class<? extends ILogging> loggerClass = logAnnotation.log();
+        log = applicationContext.getBean(loggerClass);
+        
+        log.setJoinPoint(joinPoint);
+        
         // Before executing the method
         for (LogAction action : logAnnotation.action()) {
-            handleLoggingBeforeMethod(method, action);
+            handleLogging(action,log);
         }
-
+        // While executing method
         Object result;
         try {
+
             result = joinPoint.proceed();
+            log.setResult(result);
+
         } catch (Exception e) {
             if(Arrays.stream(logAnnotation.action()).anyMatch(c->c.equals(LogAction.ERROR)))
-                logger.error("Exception in method: " + method.getName(), e);
+                logConsumer(logger::error,log.error(e));
             throw e; // Re-throwing the exception to ensure the original flow is maintained
         }
 
+        log.setIsExecuted(true);
+
         // After executing the method
         for (LogAction action : logAnnotation.action()) {
-            handleLoggingAfterMethod(method, result, action);
+            handleLogging(action,log);
         }
 
+        log.setResult(null);
+        log.setJoinPoint(null);
+        log.setIsExecuted(false);
         return result;
     }
+    
+    private void handleLogging(LogAction action,ILogging log) {
 
-    private void handleLoggingBeforeMethod(Method method, LogAction action) {
         switch (action) {
+            
             case INFO:
-                logger.info("Entering method: " + method.getName());
+                logConsumer(logger::info,log.info());
                 break;
             case DEBUG:
-                logger.debug("Executing method: " + method.getName());
+                logConsumer(logger::debug,log.debug());
                 break;
             case WARNING:
-                logger.warn("Caution! Entering method: " + method.getName());
+                logConsumer(logger::warn,log.warn());
                 break;
             default:
                 break;
         }
     }
-
-    private void handleLoggingAfterMethod(Method method, Object result, LogAction action) {
-        switch (action) {
-            case INFO:
-                logger.info("Exiting method: " + method.getName());
-                break;
-            case DEBUG:
-                logger.debug("Method result for " + method.getName() + ": " + result);
-                break;
-            case WARNING:
-                logger.warn("Finished execution with caution in method: " + method.getName());
-                break;
-            default:
-                break;
-        }
+    void logConsumer(Consumer<String> log, String message){
+        if(message != null)log.accept(message);
     }
 }
+

@@ -57,7 +57,7 @@ public class JavaUtilLoggerConfiguration implements ILoggerConfiguration {
     }
 
     @Override
-    public void error(String message, Throwable throwable) {
-        logger.log(Level.SEVERE, message, throwable);
+    public void error(String message) {
+        logger.log(Level.SEVERE, message);
     }
 }

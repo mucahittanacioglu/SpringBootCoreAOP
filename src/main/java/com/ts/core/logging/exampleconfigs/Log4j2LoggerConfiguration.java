@@ -28,7 +28,7 @@ public class Log4j2LoggerConfiguration implements ILoggerConfiguration {
     }
 
     @Override
-    public void error(String message, Throwable throwable) {
-        logger.error(message, throwable);
+    public void error(String message) {
+        logger.error(message);
     }
 }

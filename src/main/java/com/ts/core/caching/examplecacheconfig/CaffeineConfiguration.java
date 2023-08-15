@@ -10,6 +10,7 @@ import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
+//TODO not working
 @Component
 @ConditionalOnProperty(name = "cache.profile", havingValue = "caffeine")
 public class CaffeineConfiguration implements ICacheConfiguration {

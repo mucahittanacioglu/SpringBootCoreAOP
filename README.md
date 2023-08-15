@@ -14,11 +14,11 @@
    - [RedisConfiguration](src/main/java/com/ts/core/caching/examplecacheconfig/RedisConfiguration.java)
    - [CaffeineConfiguration](src/main/java/com/ts/core/caching/examplecacheconfig/CaffeineConfiguration.java)
 2. application.properties dosyasında şu satır eklenir:
-```
+``` properties
 caching.enabled=true
 ```
 3. Mevcut paketteki Redis ya da Caffeine kullanılmak istenirse, application.properties dosyasında şu satırlar eklenir:
-```
+``` properties
 #Caching configs
 redis.host=localhost
 redis.port=6379

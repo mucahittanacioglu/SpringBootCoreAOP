@@ -7,7 +7,7 @@
 - [Logging](#section-2)
 - [Repository](#section-2)
 - [Security](#section-2)
-- [Validation](#section-2)
+- [Validation](#Validation)
 
 # Caching
 1. [ICacheConfiguration](src/main/java/com/ts/core/caching/ICacheConfiguration.java) interface'ini implement eden bir configuration class'ı oluşturulur. Örnek:
@@ -32,6 +32,28 @@ Content for subsection 1.1
 ## Subsection 1.2
 Content for subsection 1.2
 
-# Section 2
-## Subsection 2.1
-Content for subsection 2.1
+# Validation
+1. [IValidator](src/main/java/com/ts/core/validation/IValidator.java) interface'i validation gereken entityler için implement edilir.
+- Örnek:
+``` Java
+@Component
+public class CityValidator implements IValidator<City> {
+
+    @Override
+    public void validate(City target) throws ValidationException {
+       
+        // Validation code
+        if (city.getName() == null || city.getName().length() < 3) {
+            throw new ValidationException("User name cannot be null or empty!");
+        }
+    }
+}
+``` 
+2. [Validate](src/main/java/com/ts/core/validation/Validate.java) anatosyonu kullanılarak validasyon işlemi yapılır. 
+- Örnek:
+``` Java
+  @Validate(CityValidator.class)
+  public void add(City city) {
+      this.cityDal.add(city);
+  }
+```

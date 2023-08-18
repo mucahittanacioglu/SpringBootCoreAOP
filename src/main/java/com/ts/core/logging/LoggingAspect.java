@@ -61,6 +61,7 @@ public class LoggingAspect {
         } catch (Exception e) {
             if(Arrays.stream(logAnnotation.action()).anyMatch(c->c.equals(LogAction.ERROR)))
                 logConsumer(logger::error,log.error(e));
+//            e.printStackTrace();
             throw e; // Re-throwing the exception to ensure the original flow is maintained
         }
 

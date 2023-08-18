@@ -37,8 +37,6 @@ public class JavaUtilLoggerConfiguration implements ILoggerConfiguration {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override

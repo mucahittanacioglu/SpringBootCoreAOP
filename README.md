@@ -4,7 +4,7 @@
 - [Caching](#Caching)
 - [Logging](#Logging)
 - [Validation](#Validation)
-- [Authentication & Authorization](#section-2)
+- [Authentication & Authorization](#Authentication&Authorization)
 
 # Caching
 ## 1-Config 
@@ -157,4 +157,22 @@ public class CityValidator implements IValidator<City> {
   public void add(City city) {
       this.cityDal.add(city);
   }
+```
+# Authentication & Authorization
+To be able to use Authentication & Authorization your User entity need to inherit from [IUser](src/main/java/com/ts/core/entities/IUser.java) abstract class.
+## 1- Authentication
+Authentication details in [SecurityConfiguration](src/main/java/com/ts/core/security/config/SecurityConfiguration.java)
+with default settings public request accepted only under "api/auth" path, other request need authentication.
+Authentication details defined in [config](src/main/java/com/ts/core/security/config) package.
+## 2- Authorization
+Package contains role based Authorization implementation. [Roles](src/main/java/com/ts/core/security/Role.java) are currently defined in enum and can be edited directly in enum.
+### 1- Usage
+[RequiredRoles](src/main/java/com/ts/core/security/RequiredRoles.java) annotation used for Authorization.<br>
+Example:
+```java
+@RequiredRoles({Role.ADD})
+public void add(City city) {
+    this.cityDal.add(city);
+    eventBus.publish(new CityCreatedIntegrationEvent(city));
+}
 ```

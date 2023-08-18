@@ -1,5 +1,6 @@
-package com.ts.core.security.jwt;
+package com.ts.core.security.config;
 
+import com.ts.core.security.jwt.JwtService;
 import com.ts.core.security.service.TSUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -46,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (jwtService.isTokenValid(jwt, userDetails)) {
 
                         SecurityContext context = SecurityContextHolder.createEmptyContext();
-                        //TODO generate with jwt service
+
                         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities());
                         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

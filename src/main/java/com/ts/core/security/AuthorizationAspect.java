@@ -2,7 +2,6 @@ package com.ts.core.security;
 
 import com.ts.core.entities.IUser;
 import com.ts.core.repository.IUserRepository;
-import com.ts.core.entities.Role;
 import com.ts.core.exceptions.UnauthenticatedException;
 import com.ts.core.exceptions.UnauthorizedException;
 import org.aspectj.lang.JoinPoint;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 

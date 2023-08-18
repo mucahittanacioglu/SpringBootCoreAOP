@@ -1,7 +1,5 @@
 package com.ts.core.security;
 
-import com.ts.core.entities.Role;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,6 +1,5 @@
 package com.ts.core.security.config;
 
-import com.ts.core.security.jwt.JwtAuthenticationFilter;
 import com.ts.core.security.service.TSUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,6 @@
 package com.ts.core.entities;
 
+import com.ts.core.security.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

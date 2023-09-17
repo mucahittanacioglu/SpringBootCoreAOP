@@ -2,18 +2,21 @@ package com.ts.core.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
-@MappedSuperclass @Setter @Getter
+@MappedSuperclass @Data
+@EntityListeners(EntityUpdateListener.class)
 public abstract class IEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    @Column
+    private Date createdAt= Calendar.getInstance().getTime();
+    @Column
+    private Date updatedAt=  Calendar.getInstance().getTime();
 }
